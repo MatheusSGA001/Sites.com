@@ -4,18 +4,15 @@ trigger:
     include:
       - main  # Gatilho de build para a branch 'main'
 
-# Nome da pool de agentes para a execução do pipeline
 pool:
   vmImage: 'ubuntu-latest'
 
-# Definindo as variáveis do pipeline
 variables:
   buildConfiguration: 'Release'
 
-# Etapas do pipeline
 steps:
   # Passo 1: Instalar Node.js
-  - task: UseNode@2
+  - task: UseNode@1  # Alterado para a versão 1
     inputs:
       versionSpec: '14.x'  # Versão do Node.js
 
@@ -37,4 +34,5 @@ steps:
   # Passo 5: Publicar artefatos para deploy
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: drop
-    displayName: 'Publicar Artefatos'
+    displayName: 'Publicar Artefat
+
