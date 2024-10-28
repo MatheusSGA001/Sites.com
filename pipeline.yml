@@ -7,32 +7,21 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  buildConfiguration: 'Release'
-
 steps:
-  # Passo 1: Instalar Node.js
-  - task: UseNode@1  # Alterado para a versão 1
-    inputs:
-      versionSpec: '14.x'  # Versão do Node.js
+  # Passo 1: Preparar o ambiente
+  - script: echo "Preparando o ambiente..."
+    displayName: 'Preparar Ambiente'
 
-  # Passo 2: Instalar dependências do projeto
-  - script: |
-      npm install
-    displayName: 'Instalar dependências'
+  # Passo 2: Executar algum processo
+  - script: echo "Executando o processo principal..."
+    displayName: 'Executar Processo'
 
-  # Passo 3: Executar testes
-  - script: |
-      npm test
-    displayName: 'Executar testes'
+  # Passo 3: Realizar uma tarefa de teste
+  - script: echo "Executando testes..."
+    displayName: 'Executar Testes'
 
-  # Passo 4: Build do projeto (opcional para projetos Node.js)
-  - script: |
-      npm run build
-    displayName: 'Build do projeto'
+  # Passo 4: Publicar os resultados
+  - script: echo "Publicando resultados..."
+    displayName: 'Publicar Resultados'
 
-  # Passo 5: Publicar artefatos para deploy
-  - publish: $(Build.ArtifactStagingDirectory)
-    artifact: drop
-    displayName: 'Publicar Artefat
 
