@@ -1,0 +1,40 @@
+# azure-pipelines.yml
+trigger:
+  branches:
+    include:
+      - main  # Gatilho de build para a branch 'main'
+
+# Nome da pool de agentes para a execução do pipeline
+pool:
+  vmImage: 'ubuntu-latest'
+
+# Definindo as variáveis do pipeline
+variables:
+  buildConfiguration: 'Release'
+
+# Etapas do pipeline
+steps:
+  # Passo 1: Instalar Node.js
+  - task: UseNode@2
+    inputs:
+      versionSpec: '14.x'  # Versão do Node.js
+
+  # Passo 2: Instalar dependências do projeto
+  - script: |
+      npm install
+    displayName: 'Instalar dependências'
+
+  # Passo 3: Executar testes
+  - script: |
+      npm test
+    displayName: 'Executar testes'
+
+  # Passo 4: Build do projeto (opcional para projetos Node.js)
+  - script: |
+      npm run build
+    displayName: 'Build do projeto'
+
+  # Passo 5: Publicar artefatos para deploy
+  - publish: $(Build.ArtifactStagingDirectory)
+    artifact: drop
+    displayName: 'Publicar Artefatos'
